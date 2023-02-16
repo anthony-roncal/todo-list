@@ -25,8 +25,7 @@ export default function viewController(projectsArray) {
 
             const deleteBtn = document.createElement('button');
             deleteBtn.classList.add('delete-todo');
-            deleteBtn.addEventListener('click', removeTodoItem);
-            
+
             todoListItem.appendChild(deleteBtn);
             todoList.appendChild(todoListItem);
         });
@@ -37,11 +36,10 @@ export default function viewController(projectsArray) {
     })();
 
     function removeTodoItem(e) {
-        projectsArray[0].removeToDo(Array.from(e.target.parentNode.parentNode.children).indexOf(e.target.parentNode));
         e.target.parentNode.parentNode.removeChild(e.target.parentNode);
     }
 
     return {
-        
+        removeTodoItem
     }
 };

@@ -16,3 +16,13 @@ defaultProject.addToDo(testTodo3);
 
 const view = viewController(projects);
 
+const deleteBtns = document.querySelectorAll('.delete-todo');
+deleteBtns.forEach(btn => {
+    btn.addEventListener('click', deleteTodo);
+});
+
+function deleteTodo(e) {
+    projects[0].removeToDo(Array.from(e.target.parentNode.parentNode.children).indexOf(e.target.parentNode));
+    view.removeTodoItem(e);
+}
+
