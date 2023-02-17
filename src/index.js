@@ -6,8 +6,10 @@ import viewController from './viewController';
 // init projects array and default project
 let projects = [];
 const defaultProject = Project(0, "To-Do");
+const newProject = Project(1, "My List");
 let currentProject = 0;
 projects.push(defaultProject);
+projects.push(newProject);
 
 // init dummy data
 const testTodo1 = Todo('Pay bills', 'Pay credit card bills', '2/28/2023', 'high', 'check for any incorrect charges');
@@ -18,9 +20,9 @@ defaultProject.addToDo(testTodo2);
 defaultProject.addToDo(testTodo3);
 
 // init viewController
-const view = viewController(projects);
+const view = viewController(projects, currentProject);
 
-// add event listener for todo delete buttons
+// add event listener and function for todo delete buttons
 const deleteBtns = document.querySelectorAll('.delete-todo');
 deleteBtns.forEach(btn => {
     btn.addEventListener('click', deleteTodo);

@@ -1,4 +1,4 @@
-export default function viewController(projectsArray) {
+export default function viewController(projectsArray, currentProject) {
     (function init() {
         const header = document.createElement('header');
         const sidebar = document.createElement('div');
@@ -12,10 +12,15 @@ export default function viewController(projectsArray) {
         sidebar.classList.add('sidebar');
         projectsArray.forEach(project => {
             const projectListItem = document.createElement('li');
+            projectListItem.classList.add('project-item');
             projectListItem.textContent = project.title;
+            if(project.id === currentProject) {
+                projectListItem.classList.add('current-project');
+            }
             projectsList.appendChild(projectListItem);
         });
         projectsList.classList.add('projects-ul');
+        console.log(projectsArray[currentProject]);
         sidebar.appendChild(projectsList);
 
         // init content with todos

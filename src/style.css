@@ -23,6 +23,25 @@ header {
     font-size: 20px;
 }
 
+.projects-ul {
+    padding: 0;
+}
+
+.project-item {
+    padding: 10px 20px;
+}
+
+.project-item:hover {
+    color: #71717a;
+    cursor: pointer;
+}
+
+.current-project,
+.current-project:hover {
+    background-color: #6366f1;
+    color: #fafafa;
+}
+
 .content {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
