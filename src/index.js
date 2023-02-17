@@ -27,23 +27,24 @@ newProject.addToDo(testTodo6);
 
 // init viewController
 const view = viewController(projects, currentProject);
+addSwitchProjectsEventListeners();
+addDeleteEventListeners();
 
-// add event listener and function for switching projects
-const projectItems = document.querySelectorAll('.project-item');
-projectItems.forEach(item => {
-    item.addEventListener('click', selectProject);
-})
-
-function selectProject(e) {
-    currentProject = Array.from(e.target.parentNode.children).indexOf(e.target);
-    view.updateCurrentProject(currentProject);
+function addSwitchProjectsEventListeners() {
+    // add event listener and function for switching projects
+    const projectItems = document.querySelectorAll('.project-item');
+    projectItems.forEach(item => {
+        item.addEventListener('click', selectProject);
+    });
 }
 
-// add event listener and function for todo delete buttons
-const deleteBtns = document.querySelectorAll('.delete-todo');
-deleteBtns.forEach(btn => {
-    btn.addEventListener('click', deleteTodo);
-});
+function addDeleteEventListeners() {
+    // add event listener and function for todo delete buttons
+    const deleteBtns = document.querySelectorAll('.delete-todo');
+    deleteBtns.forEach(btn => {
+        btn.addEventListener('click', deleteTodo);
+    });
+}
 
 function deleteTodo(e) {
     let index = Array.from(e.target.parentNode.parentNode.children).indexOf(e.target.parentNode);
@@ -51,3 +52,9 @@ function deleteTodo(e) {
     view.removeTodoItem(e);
 }
 
+function selectProject(e) {
+    currentProject = Array.from(e.target.parentNode.children).indexOf(e.target);
+    view.updateCurrentProject(currentProject);
+    view.updateTodos(projects[currentProject]);
+    addDeleteEventListeners();
+}

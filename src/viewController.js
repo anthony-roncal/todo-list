@@ -6,26 +6,17 @@ export default function viewController(projectsArray, currentProject) {
     const todoList = document.createElement('ul');
 
     (function init() {
-        
-
         header.textContent = 'Odin To-Do List';
 
         // init sidebar with projects
         sidebar.classList.add('sidebar');
-        projectsArray.forEach(project => {
-            const projectListItem = document.createElement('li');
-            projectListItem.classList.add('project-item');
-            projectListItem.textContent = project.title;
-            if(project.id === currentProject) {
-                projectListItem.classList.toggle('current-project');
-            }
-            projectsList.appendChild(projectListItem);
-        });
+        updateProjects();
         projectsList.classList.add('projects-ul');
         sidebar.appendChild(projectsList);
 
         // init content with todos
         content.classList.add('content');
+        todoList.classList.add('todo-ul');
         updateTodos(projectsArray[0]);
 
         document.body.append(header, sidebar, content);
@@ -42,14 +33,32 @@ export default function viewController(projectsArray, currentProject) {
         projectListItems[currentProject].classList.toggle('current-project');
 
         // update content
-        let todoList = document.querySelector('.todo-ul');
-        Array.from(todoList.children).forEach(todo => {
-            todoList.removeChild(todo);
+        // updateTodos(projectsArray[currentProject]);
+    }
+
+    function updateProjects() {
+        // remove old Projects
+        Array.from(projectsList.children).forEach(project => {
+            projectsList.removeChild(project);
         });
-        updateTodos(projectsArray[currentProject]);
+        // add new Projects
+        projectsArray.forEach(project => {
+            const projectListItem = document.createElement('li');
+            projectListItem.classList.add('project-item');
+            projectListItem.textContent = project.title;
+            if(project.id === currentProject) {
+                projectListItem.classList.toggle('current-project');
+            }
+            projectsList.appendChild(projectListItem);
+        });
     }
 
     function updateTodos(project) {
+        // remove old Todos
+        Array.from(todoList.children).forEach(todo => {
+            todoList.removeChild(todo);
+        });
+        // add new Todos
         project.todos.forEach(todo => {
             const todoListItem = document.createElement('li');
             todoListItem.classList.add('todo-item');
@@ -61,7 +70,6 @@ export default function viewController(projectsArray, currentProject) {
             todoListItem.appendChild(deleteBtn);
             todoList.appendChild(todoListItem);
         });
-        todoList.classList.add('todo-ul');
         content.appendChild(todoList);
     }
 
@@ -71,6 +79,7 @@ export default function viewController(projectsArray, currentProject) {
 
     return {
         removeTodoItem,
-        updateCurrentProject
+        updateCurrentProject,
+        updateTodos
     }
 };
