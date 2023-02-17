@@ -15,12 +15,29 @@ projects.push(newProject);
 const testTodo1 = Todo('Pay bills', 'Pay credit card bills', '2/28/2023', 'high', 'check for any incorrect charges');
 const testTodo2 = Todo('Grocery shopping', 'milk, eggs, cauliflower rice', '2/18/2023', 'high', 'check if we have coupons');
 const testTodo3 = Todo('Make doctor appointment', 'Make an appointment for a checkup', '3/01/2023', 'high', '');
+const testTodo4 = Todo('Wash car', 'take car to car wash', '2/18/2023', 'low', '');
+const testTodo5 = Todo('Call mom', 'return her call, update about vacation plans', '2/19/2023', 'medium', '');
+const testTodo6 = Todo('Book flight', 'book flights for vacation', '2/24/2023', 'high', 'check hopper');
 defaultProject.addToDo(testTodo1);
 defaultProject.addToDo(testTodo2);
 defaultProject.addToDo(testTodo3);
+newProject.addToDo(testTodo4);
+newProject.addToDo(testTodo5);
+newProject.addToDo(testTodo6);
 
 // init viewController
 const view = viewController(projects, currentProject);
+
+// add event listener and function for switching projects
+const projectItems = document.querySelectorAll('.project-item');
+projectItems.forEach(item => {
+    item.addEventListener('click', selectProject);
+})
+
+function selectProject(e) {
+    currentProject = Array.from(e.target.parentNode.children).indexOf(e.target);
+    view.updateCurrentProject(currentProject);
+}
 
 // add event listener and function for todo delete buttons
 const deleteBtns = document.querySelectorAll('.delete-todo');

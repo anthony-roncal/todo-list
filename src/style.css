@@ -25,10 +25,14 @@ header {
 
 .projects-ul {
     padding: 0;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .project-item {
     padding: 10px 20px;
+    border-radius: 10px;
 }
 
 .project-item:hover {
