@@ -8,6 +8,7 @@ export default function viewController(projectsArray) {
 
         header.textContent = 'Odin To-Do List';
 
+        // init sidebar with projects
         sidebar.classList.add('sidebar');
         projectsArray.forEach(project => {
             const projectListItem = document.createElement('li');
@@ -17,6 +18,7 @@ export default function viewController(projectsArray) {
         projectsList.classList.add('projects-ul');
         sidebar.appendChild(projectsList);
 
+        // init content with todos
         content.classList.add('content');
         projectsArray[0].todos.forEach(todo => {
             const todoListItem = document.createElement('li');
