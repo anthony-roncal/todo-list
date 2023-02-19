@@ -68,9 +68,9 @@ function toggleAddProjectForm() {
 }
 
 function addProject() {
-    const addProjectField = document.querySelector('.add-project-field');
-    if(addProjectField.value) {
-        const newProject = Project(projects.length, addProjectField.value);
+    const addProjectFieldValue = document.querySelector('.add-project-field').value.toString().trim();
+    if(addProjectFieldValue) {
+        const newProject = Project(projects.length, addProjectFieldValue);
         projects.push(newProject);
         view.toggleAddProjectForm();
         view.updateProjects(currentProject);
