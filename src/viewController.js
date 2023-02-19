@@ -4,15 +4,41 @@ export default function viewController(projectsArray, currentProject) {
     const projectsList = document.createElement('ul');
     const content = document.createElement('div');
     const todoList = document.createElement('ul');
+    const showAddProjectFormBtn = document.createElement('button');
+    const addProjectField = document.createElement('input');
+    const addProjectContainer = document.createElement('div');
+    const addProjectBtn = document.createElement('button');
+    const addProjectCancelBtn = document.createElement('button');
 
     (function init() {
         header.textContent = 'Odin To-Do List';
 
         // init sidebar with projects
         sidebar.classList.add('sidebar');
-        updateProjects();
+        updateProjects(currentProject);
         projectsList.classList.add('projects-ul');
         sidebar.appendChild(projectsList);
+
+        // init hidden add project form
+        showAddProjectFormBtn.textContent = '+ Add new project';
+        showAddProjectFormBtn.classList.add('show-add-project-form-btn');
+        
+        addProjectField.setAttribute('type', 'text');
+        addProjectField.classList.add('add-project-field');
+        addProjectField.classList.add('hidden');
+        
+        addProjectContainer.classList.add('add-project-container');
+        
+        addProjectBtn.textContent = 'Add project';
+        addProjectBtn.classList.add('add-project-btn');
+        addProjectBtn.classList.add('hidden');
+        
+        addProjectCancelBtn.textContent = 'Cancel';
+        addProjectCancelBtn.classList.add('add-project-cancel-btn');
+        addProjectCancelBtn.classList.add('hidden');
+        
+        addProjectContainer.append(addProjectBtn, addProjectCancelBtn);
+        projectsList.append(addProjectField, showAddProjectFormBtn, addProjectContainer);
 
         // init content with todos
         content.classList.add('content');
@@ -31,12 +57,9 @@ export default function viewController(projectsArray, currentProject) {
             }
         });
         projectListItems[currentProject].classList.toggle('current-project');
-
-        // update content
-        // updateTodos(projectsArray[currentProject]);
     }
 
-    function updateProjects() {
+    function updateProjects(currentProject) {
         // remove old Projects
         Array.from(projectsList.children).forEach(project => {
             projectsList.removeChild(project);
@@ -49,8 +72,19 @@ export default function viewController(projectsArray, currentProject) {
             if(project.id === currentProject) {
                 projectListItem.classList.toggle('current-project');
             }
-            projectsList.appendChild(projectListItem);
+            projectsList.append(projectListItem, addProjectField, showAddProjectFormBtn, addProjectContainer);
         });
+        
+    }
+
+    function toggleAddProjectForm() {
+        addProjectField.classList.toggle('hidden');
+        addProjectField.focus();
+        addProjectField.select();
+        addProjectBtn.classList.toggle('hidden');
+        addProjectCancelBtn.classList.toggle('hidden');
+        showAddProjectFormBtn.classList.toggle('hidden');
+        addProjectField.value = '';
     }
 
     function updateTodos(project) {
@@ -66,6 +100,7 @@ export default function viewController(projectsArray, currentProject) {
 
             const deleteBtn = document.createElement('button');
             deleteBtn.classList.add('delete-todo');
+            deleteBtn.textContent = 'x';
 
             todoListItem.appendChild(deleteBtn);
             todoList.appendChild(todoListItem);
@@ -79,7 +114,9 @@ export default function viewController(projectsArray, currentProject) {
 
     return {
         removeTodoItem,
+        updateProjects,
         updateCurrentProject,
+        toggleAddProjectForm,
         updateTodos
     }
 };

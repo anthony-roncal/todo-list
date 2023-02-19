@@ -27,15 +27,32 @@ newProject.addToDo(testTodo6);
 
 // init viewController
 const view = viewController(projects, currentProject);
-addSwitchProjectsEventListeners();
+
+// add event listeners
+addSelectProjectsEventListeners();
 addDeleteEventListeners();
 
-function addSwitchProjectsEventListeners() {
-    // add event listener and function for switching projects
+const showAddProjectFormBtn = document.querySelector('.show-add-project-form-btn');
+showAddProjectFormBtn.addEventListener('click', toggleAddProjectForm);
+
+const addProjectCancelBtn = document.querySelector('.add-project-cancel-btn');
+addProjectCancelBtn.addEventListener('click', toggleAddProjectForm);
+
+const addProjectBtn = document.querySelector('.add-project-btn');
+addProjectBtn.addEventListener('click', addProject);
+
+function addSelectProjectsEventListeners() {
     const projectItems = document.querySelectorAll('.project-item');
     projectItems.forEach(item => {
         item.addEventListener('click', selectProject);
     });
+}
+
+function selectProject(e) {
+    currentProject = Array.from(e.target.parentNode.children).indexOf(e.target);
+    view.updateCurrentProject(currentProject);
+    view.updateTodos(projects[currentProject]);
+    addDeleteEventListeners();
 }
 
 function addDeleteEventListeners() {
@@ -46,15 +63,24 @@ function addDeleteEventListeners() {
     });
 }
 
+function toggleAddProjectForm() {
+    view.toggleAddProjectForm();
+}
+
+function addProject() {
+    const addProjectField = document.querySelector('.add-project-field');
+    if(addProjectField.value) {
+        const newProject = Project(projects.length, addProjectField.value);
+        projects.push(newProject);
+        view.toggleAddProjectForm();
+        view.updateProjects(currentProject);
+        addSelectProjectsEventListeners();
+    }
+} 
+
+
 function deleteTodo(e) {
     let index = Array.from(e.target.parentNode.parentNode.children).indexOf(e.target.parentNode);
     projects[currentProject].removeToDo(index);
     view.removeTodoItem(e);
-}
-
-function selectProject(e) {
-    currentProject = Array.from(e.target.parentNode.children).indexOf(e.target);
-    view.updateCurrentProject(currentProject);
-    view.updateTodos(projects[currentProject]);
-    addDeleteEventListeners();
 }
