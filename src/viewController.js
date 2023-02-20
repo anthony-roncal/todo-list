@@ -96,6 +96,12 @@ export default function viewController(projectsArray, currentProject) {
             if(project.id === currentProject) {
                 projectListItem.classList.toggle('current-project');
             }
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('delete-project');
+            deleteBtn.textContent = 'x';
+
+            projectListItem.appendChild(deleteBtn);
+
             projectsList.append(projectListItem, addProjectField, showAddProjectFormBtn, addProjectContainer);
         });
     }
@@ -142,16 +148,16 @@ export default function viewController(projectsArray, currentProject) {
         content.appendChild(todoList);
     }
 
-    function removeTodoItem(e) {
+    function removeItem(e) {
         e.target.parentNode.parentNode.removeChild(e.target.parentNode);
     }
 
     return {
-        removeTodoItem,
         updateProjects,
         updateCurrentProject,
         toggleAddProjectForm,
         toggleAddTodoForm,
-        updateTodos
+        updateTodos,
+        removeItem
     }
 };

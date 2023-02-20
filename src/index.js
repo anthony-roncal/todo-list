@@ -30,7 +30,8 @@ const view = viewController(projects, currentProject);
 
 // add event listeners
 addSelectProjectsEventListeners();
-addDeleteEventListeners();
+addDeleteProjectEventListeners()
+addDeleteTodoEventListeners();
 
 const showAddProjectFormBtn = document.querySelector('.show-add-project-form-btn');
 showAddProjectFormBtn.addEventListener('click', toggleAddProjectForm);
@@ -61,14 +62,20 @@ function selectProject(e) {
     currentProject = Array.from(e.target.parentNode.children).indexOf(e.target);
     view.updateCurrentProject(currentProject);
     view.updateTodos(projects[currentProject]);
-    addDeleteEventListeners();
+    addDeleteTodoEventListeners();
 }
 
-function addDeleteEventListeners() {
-    // add event listener and function for todo delete buttons
+function addDeleteProjectEventListeners() {
+    const deleteBtns = document.querySelectorAll('.delete-project');
+    deleteBtns.forEach(btn => {
+        btn.addEventListener('click', deleteItem);
+    });
+}
+
+function addDeleteTodoEventListeners() {
     const deleteBtns = document.querySelectorAll('.delete-todo');
     deleteBtns.forEach(btn => {
-        btn.addEventListener('click', deleteTodo);
+        btn.addEventListener('click', deleteItem);
     });
 }
 
@@ -83,6 +90,7 @@ function addProject() {
         projects.push(newProject);
         view.toggleAddProjectForm();
         view.updateProjects(currentProject);
+        addDeleteProjectEventListeners()
         addSelectProjectsEventListeners();
     }
 } 
@@ -94,7 +102,7 @@ function addTodo() {
         projects[currentProject].todos.push(newTodo);
         view.toggleAddTodoForm();
         view.updateTodos(projects[currentProject]);
-        addDeleteEventListeners();
+        addDeleteTodoEventListeners();
     }
 }
 
@@ -102,8 +110,8 @@ function toggleAddTodoForm() {
     view.toggleAddTodoForm();
 }
 
-function deleteTodo(e) {
+function deleteItem(e) {
     let index = Array.from(e.target.parentNode.parentNode.children).indexOf(e.target.parentNode);
-    projects[currentProject].removeToDo(index);
-    view.removeTodoItem(e);
+    (e.target.classList[0] === "delete-project") ? projects.splice(index, 1) : projects[currentProject].removeToDo(index);
+    view.removeItem(e);
 }
