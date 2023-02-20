@@ -34,49 +34,45 @@ header {
     margin-right: auto;
 }
 
-.project-item,
-.todo-item,
-.show-add-project-form-btn,
-.add-project-btn,
-.add-project-cancel-btn {
-    padding: 10px 20px;
-    border-radius: 10px;
-    margin-top: 10px;
-    color: #52525b;
+.todo-ul {
+    width: 75%;
 }
 
-.todo-item {
-    color: black;
-}
-
-.add-project-field {
-    margin-top: 10px;
+.add-project-field,
+.add-todo-field {
     width: 100%;
-    border: none;
     outline: none;
-    background-color: #fafafa;
-    border-radius: 10px;
-    height: 38px;
+    background-color: #ffffff;
     font-size: 20px;
-}
-
-.add-project-container {
-    display: flex;
+    box-shadow: 2px 2px 2px #d4d4d8;
 }
 
 .show-add-project-form-btn,
 .add-project-btn,
-.add-project-cancel-btn {
-    border: none;
+.add-project-cancel-btn,
+.show-add-todo-form-btn,
+.add-todo-btn,
+.add-todo-cancel-btn
+ {
     font-size: 20px;
     background-color: #e4e4e7;
 }
 
-.show-add-project-form-btn {
-    width: 100%;
+.show-add-todo-form-btn,
+.add-todo-cancel-btn {
+    background-color: #fafafa;
+    color: #3f3f46;
+    cursor: pointer;
 }
 
-.add-project-btn {
+.show-add-project-form-btn,
+.show-add-todo-form-btn {
+    width: 100%;
+    text-align: left;
+}
+
+.add-project-btn,
+.add-todo-btn {
     background-color: #6366f1;
     color: #fafafa;
 }
@@ -85,15 +81,17 @@ header {
 .show-add-project-form-btn:hover,
 .add-project-cancel-btn:hover {
     background-color: #d4d4d8;
-    color: black;
+    color: #18181b;
     cursor: pointer;
 }
 
 .add-project-cancel-btn:hover {
     background-color: #e4e4e7;
+    color: #18181b;
 }
 
-.add-project-btn:hover {
+.add-project-btn:hover,
+.add-todo-btn:hover {
     background-color: #4338ca;
     color: #fafafa;
     cursor: pointer;
@@ -119,10 +117,21 @@ ul {
     list-style-type: none;
 }
 
+li,
+button,
+input {
+    box-sizing: border-box;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-top: 10px;
+    color: #52525b;
+}
+
 .todo-item {
     display: flex;
     align-content: center;
-    width: 70%;
+    width: 100%;
     justify-content: space-between;
 }
 
@@ -130,8 +139,9 @@ ul {
     display: none;
     background-color: #f4f4f5;
     font-size: 18px;
-    border: none;
     border-radius: 3px;
+    padding: 1px 10px;
+    margin: 0;
 }
 
 .delete-todo:hover {
@@ -139,8 +149,10 @@ ul {
     cursor: pointer;
 }
 
-.todo-item:hover{
+.todo-item:hover,
+.show-add-todo-form-btn:hover {
     background-color: #f4f4f5;
+    color: #18181b;
 }
 
 .todo-item:hover > .delete-todo {
