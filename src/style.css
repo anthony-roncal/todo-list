@@ -84,7 +84,7 @@ header {
 .project-item:hover,
 .show-add-project-form-btn:hover,
 .add-project-cancel-btn:hover {
-    background-color: #a1a1aa;
+    background-color: #d4d4d8;
     color: black;
     cursor: pointer;
 }
@@ -128,17 +128,19 @@ ul {
 
 .delete-todo {
     display: none;
-    background-color: #fafafa;
+    background-color: #f4f4f5;
     font-size: 18px;
     border: none;
+    border-radius: 3px;
 }
 
 .delete-todo:hover {
+    background-color: #e4e4e7;
     cursor: pointer;
 }
 
 .todo-item:hover{
-    color: #71717a;
+    background-color: #f4f4f5;
 }
 
 .todo-item:hover > .delete-todo {
