@@ -33,7 +33,7 @@ export default function viewController(projectsArray, currentProject) {
         addProjectBtn.classList.add('add-project-btn');
         addProjectBtn.classList.add('hidden');
         
-        addProjectCancelBtn.textContent = 'Cancel';
+        addProjectCancelBtn.textContent = 'X';
         addProjectCancelBtn.classList.add('add-project-cancel-btn');
         addProjectCancelBtn.classList.add('hidden');
         
