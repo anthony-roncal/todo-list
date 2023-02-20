@@ -9,6 +9,11 @@ export default function viewController(projectsArray, currentProject) {
     const addProjectContainer = document.createElement('div');
     const addProjectBtn = document.createElement('button');
     const addProjectCancelBtn = document.createElement('button');
+    const showAddTodoFormBtn = document.createElement('button');
+    const addTodoField = document.createElement('input');
+    const addTodoContainer = document.createElement('div');
+    const addTodoBtn = document.createElement('button');
+    const addTodoCancelBtn = document.createElement('button');
 
     (function init() {
         header.textContent = 'Odin To-Do List';
@@ -27,15 +32,14 @@ export default function viewController(projectsArray, currentProject) {
         addProjectField.classList.add('add-project-field');
         addProjectField.classList.add('hidden');
         
-        addProjectContainer.classList.add('add-project-container');
-        
         addProjectBtn.textContent = 'Add project';
         addProjectBtn.classList.add('add-project-btn');
-        addProjectBtn.classList.add('hidden');
         
         addProjectCancelBtn.textContent = 'X';
         addProjectCancelBtn.classList.add('add-project-cancel-btn');
-        addProjectCancelBtn.classList.add('hidden');
+
+        addProjectContainer.classList.add('add-project-container');
+        addProjectContainer.classList.add('hidden');
         
         addProjectContainer.append(addProjectBtn, addProjectCancelBtn);
         projectsList.append(addProjectField, showAddProjectFormBtn, addProjectContainer);
@@ -44,6 +48,26 @@ export default function viewController(projectsArray, currentProject) {
         content.classList.add('content');
         todoList.classList.add('todo-ul');
         updateTodos(projectsArray[0]);
+
+        // init hidden add todo form
+        showAddTodoFormBtn.textContent = '+ Add new to-do';
+        showAddTodoFormBtn.classList.add('show-add-todo-form-btn');
+
+        addTodoField.setAttribute('type', 'text');
+        addTodoField.classList.add('add-todo-field');
+        addTodoField.classList.add('hidden');
+
+        addTodoBtn.textContent = 'Add to-do';
+        addTodoBtn.classList.add('add-todo-btn');
+
+        addTodoCancelBtn.textContent = 'X';
+        addTodoCancelBtn.classList.add('add-todo-cancel-btn');
+
+        addTodoContainer.classList.add('add-todo-container');
+        addTodoContainer.classList.add('hidden');
+
+        addTodoContainer.append(addTodoBtn, addTodoCancelBtn);
+        todoList.append(addTodoField, showAddTodoFormBtn, addTodoContainer);
 
         document.body.append(header, sidebar, content);
     })();
@@ -74,17 +98,26 @@ export default function viewController(projectsArray, currentProject) {
             }
             projectsList.append(projectListItem, addProjectField, showAddProjectFormBtn, addProjectContainer);
         });
-        
     }
 
     function toggleAddProjectForm() {
         addProjectField.classList.toggle('hidden');
         addProjectField.focus();
         addProjectField.select();
-        addProjectBtn.classList.toggle('hidden');
-        addProjectCancelBtn.classList.toggle('hidden');
+
+        addProjectContainer.classList.toggle('hidden');
         showAddProjectFormBtn.classList.toggle('hidden');
         addProjectField.value = '';
+    }
+
+    function toggleAddTodoForm() {
+        addTodoField.classList.toggle('hidden');
+        addTodoField.focus();
+        addTodoField.select();
+
+        addTodoContainer.classList.toggle('hidden');
+        showAddTodoFormBtn.classList.toggle('hidden');
+        addTodoField.value = '';
     }
 
     function updateTodos(project) {
@@ -105,6 +138,7 @@ export default function viewController(projectsArray, currentProject) {
             todoListItem.appendChild(deleteBtn);
             todoList.appendChild(todoListItem);
         });
+        todoList.append(addTodoField, showAddTodoFormBtn, addTodoContainer);
         content.appendChild(todoList);
     }
 
@@ -117,6 +151,7 @@ export default function viewController(projectsArray, currentProject) {
         updateProjects,
         updateCurrentProject,
         toggleAddProjectForm,
+        toggleAddTodoForm,
         updateTodos
     }
 };

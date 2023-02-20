@@ -41,6 +41,15 @@ addProjectCancelBtn.addEventListener('click', toggleAddProjectForm);
 const addProjectBtn = document.querySelector('.add-project-btn');
 addProjectBtn.addEventListener('click', addProject);
 
+const showAddTodoFormBtn = document.querySelector('.show-add-todo-form-btn');
+showAddTodoFormBtn.addEventListener('click', toggleAddTodoForm);
+
+const addTodoCancelBtn = document.querySelector('.add-todo-cancel-btn');
+addTodoCancelBtn.addEventListener('click', toggleAddTodoForm);
+
+const addTodoBtn = document.querySelector('.add-todo-btn');
+addTodoBtn.addEventListener('click', addTodo);
+
 function addSelectProjectsEventListeners() {
     const projectItems = document.querySelectorAll('.project-item');
     projectItems.forEach(item => {
@@ -78,6 +87,20 @@ function addProject() {
     }
 } 
 
+function addTodo() {
+    const addTodoFieldValue = document.querySelector('.add-todo-field').value.toString().trim();
+    if(addTodoFieldValue) {
+        const newTodo = Todo(addTodoFieldValue);
+        projects[currentProject].todos.push(newTodo);
+        view.toggleAddTodoForm();
+        view.updateTodos(projects[currentProject]);
+        addDeleteEventListeners();
+    }
+}
+
+function toggleAddTodoForm() {
+    view.toggleAddTodoForm();
+}
 
 function deleteTodo(e) {
     let index = Array.from(e.target.parentNode.parentNode.children).indexOf(e.target.parentNode);
