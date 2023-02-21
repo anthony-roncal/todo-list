@@ -9,7 +9,7 @@ export default function Project(id, title) {
         if(index < todos.length) {
             todos.splice(index, 1);
         } else {
-            alert("Attempting to remove an invalid ToDo");
+            alert("Attempting to remove an invalid to-do");
         }
     }
 

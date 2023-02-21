@@ -119,6 +119,11 @@ ul {
     list-style-type: none;
 }
 
+label {
+    text-align: left;
+    margin-left: 10px;
+}
+
 li,
 button,
 input {
@@ -143,6 +148,19 @@ button {
     justify-content: space-between;
 }
 
+.todo-item:hover,
+.show-add-todo-form-btn:hover,
+.todo-item:hover > .chevron {
+    background-color: #f4f4f5;
+    color: #18181b;
+}
+
+.project-item:hover > .delete-project,
+.todo-item:hover > .delete-todo,
+.todo-item:hover > .chevron {
+    display: block;
+}
+
 .delete-project,
 .delete-todo {
     display: none;
@@ -153,6 +171,10 @@ button {
     margin: 0;
 }
 
+.delete-todo:hover {
+    background-color: #e4e4e7;
+}
+
 .delete-project {
     background-color: #d4d4d8;
 }
@@ -161,17 +183,16 @@ button {
     background-color: #a1a1aa;
 }
 
-.delete-todo:hover {
-    background-color: #e4e4e7;
+input[type=checkbox]:checked + label.strikethrough {
+    text-decoration: line-through;
 }
 
-.todo-item:hover,
-.show-add-todo-form-btn:hover {
-    background-color: #f4f4f5;
-    color: #18181b;
-}
-
-.project-item:hover > .delete-project,
-.todo-item:hover > .delete-todo {
-    display: block;
+.chevron {
+    display: none;
+    background-image: url('./chevron-down.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0;  
+    height: 25px;
+    align-self: center;
 }

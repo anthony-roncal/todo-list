@@ -135,13 +135,25 @@ export default function viewController(projectsArray, currentProject) {
         project.todos.forEach(todo => {
             const todoListItem = document.createElement('li');
             todoListItem.classList.add('todo-item');
-            todoListItem.textContent = todo.title;
+
+            const checkbox = document.createElement('input');
+            checkbox.setAttribute('type', 'checkbox');
+
+            const todoTitle = document.createElement('label');
+            todoTitle.textContent = todo.title;
+            todoTitle.classList.add('strikethrough');
+
+            const checkboxTitlecontainer = document.createElement('div');
+            checkboxTitlecontainer.append(checkbox, todoTitle);
 
             const deleteBtn = document.createElement('button');
             deleteBtn.classList.add('delete-todo');
             deleteBtn.textContent = 'x';
 
-            todoListItem.appendChild(deleteBtn);
+            const chevron = document.createElement('button');
+            chevron.classList.add('chevron');
+
+            todoListItem.append(checkboxTitlecontainer, chevron); // deleteBtn
             todoList.appendChild(todoListItem);
         });
         todoList.append(addTodoField, showAddTodoFormBtn, addTodoContainer);
