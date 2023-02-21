@@ -30,7 +30,8 @@ const view = viewController(projects, currentProject);
 
 // add event listeners
 addSelectProjectsEventListeners();
-addDeleteProjectEventListeners()
+addDeleteProjectEventListeners();
+addCompleteTodoEventListeners();
 addDeleteTodoEventListeners();
 
 const showAddProjectFormBtn = document.querySelector('.show-add-project-form-btn');
@@ -62,21 +63,23 @@ function selectProject(e) {
     currentProject = Array.from(e.target.parentNode.children).indexOf(e.target);
     view.updateCurrentProject(currentProject);
     view.updateTodos(projects[currentProject]);
+    addCompleteTodoEventListeners();
     addDeleteTodoEventListeners();
 }
 
 function addDeleteProjectEventListeners() {
     const deleteBtns = document.querySelectorAll('.delete-project');
-    deleteBtns.forEach(btn => {
-        btn.addEventListener('click', deleteItem);
-    });
+    deleteBtns.forEach(btn => btn.addEventListener('click', deleteItem));
+}
+
+function addCompleteTodoEventListeners() {
+    const checkboxes = document.querySelectorAll('input[type=checkbox]');
+    checkboxes.forEach(checkbox => checkbox.addEventListener('click', completeTodo));
 }
 
 function addDeleteTodoEventListeners() {
     const deleteBtns = document.querySelectorAll('.delete-todo');
-    deleteBtns.forEach(btn => {
-        btn.addEventListener('click', deleteItem);
-    });
+    deleteBtns.forEach(btn => btn.addEventListener('click', deleteItem));
 }
 
 function toggleAddProjectForm() {
@@ -108,6 +111,11 @@ function addTodo() {
 
 function toggleAddTodoForm() {
     view.toggleAddTodoForm();
+}
+
+function completeTodo(e) {
+    let index = Array.from(e.target.parentNode.parentNode.parentNode.children).indexOf(e.target.parentNode.parentNode);
+    projects[currentProject].todos[index].complete = !projects[currentProject].todos[index].complete;
 }
 
 function deleteItem(e) {

@@ -138,6 +138,7 @@ export default function viewController(projectsArray, currentProject) {
 
             const checkbox = document.createElement('input');
             checkbox.setAttribute('type', 'checkbox');
+            (todo.complete) ? checkbox.checked = true : checkbox.checked = false;
 
             const todoTitle = document.createElement('label');
             todoTitle.textContent = todo.title;
