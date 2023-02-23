@@ -1,3 +1,19 @@
+:root {
+    --zinc-50: #fafafa;
+    --zinc-100: #f4f4f5;
+    --zinc-200: #e4e4e7;
+    --zinc-300: #d4d4d8;
+    --zinc-400: #a1a1aa;
+    --zinc-500: #71717a;
+    --zinc-600: #52525b;
+    --zinc-700: #3f3f46;
+    --zinc-800: #27272a;
+    --zinc-900: #18181b;
+    --indigo: #6366f1;
+    --indigo-dark: #4338ca;
+    --indigo-light: #818cf8;
+}
+
 body {
     display: grid;
     grid-template-columns: 1fr 3fr;
@@ -9,8 +25,8 @@ body {
 
 header {
     grid-column: 1 / 3;
-    background-color: #3f3f46;
-    color: #fafafa;
+    background-color: var(--indigo);
+    color: var(--zinc-50);
     font-size: 28px;
     padding: 20px 40px;
 }
@@ -18,17 +34,17 @@ header {
 .sidebar,
 .content {
     font-size: 20px;
+    background-color: var(--zinc-50);
 }
 
 .sidebar {
     grid-row: 2 / 3;
     grid-column: 1 / 2;
-    background-color: #e4e4e7;
     height: 100%;
+    border-right: 1px solid var(--zinc-200);
 }
 
 .projects-ul {
-    padding: 0;
     width: 95%;
     margin-left: auto;
     margin-right: auto;
@@ -36,32 +52,48 @@ header {
 
 .todo-ul {
     width: 75%;
+    margin-left: 10px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: var(--zinc-200);
 }
 
 .add-project-field,
 .add-todo-field {
     width: 100%;
     outline: none;
-    background-color: #ffffff;
+    background-color: var(--zinc-50);
     font-size: 20px;
-    box-shadow: 2px 2px 2px #d4d4d8;
+    box-shadow: 0 2px 2px var(--zinc-300);
+}
+
+.add-project-btn,
+.add-project-cancel-btn,
+.add-todo-btn,
+.add-todo-cancel-btn {
+    font-size: 20px;
+}
+
+.todo-item,
+.show-add-project-form-btn,
+.add-project-cancel-btn {
+    background-color: var(--zinc-50);
+    color: var(--zinc-800);
 }
 
 .show-add-project-form-btn,
-.add-project-btn,
-.add-project-cancel-btn,
-.show-add-todo-form-btn,
-.add-todo-btn,
-.add-todo-cancel-btn
- {
-    font-size: 20px;
-    background-color: #e4e4e7;
+.show-add-todo-form-btn {
+    font-size: 16px;
+    color: var(--zinc-600);
 }
 
 .show-add-todo-form-btn,
 .add-todo-cancel-btn {
-    background-color: #fafafa;
-    color: #3f3f46;
+    background-color: var(--zinc-200);
+}
+
+.show-add-todo-form-btn:hover {
+    background-color: var(--zinc-300);
 }
 
 .show-add-project-form-btn,
@@ -70,53 +102,47 @@ header {
     text-align: left;
 }
 
+.current-project,
+.current-project:hover,
+.current-project > .delete-project,
 .add-project-btn,
 .add-todo-btn {
-    background-color: #6366f1;
-    color: #fafafa;
+    background-color: var(--indigo);
+    color: var(--zinc-50);
 }
 
 .project-item:hover,
 .show-add-project-form-btn:hover,
-.add-project-cancel-btn:hover {
-    background-color: #d4d4d8;
-    color: #18181b;
-}
-
-.add-project-cancel-btn:hover {
-    background-color: #e4e4e7;
-    color: #18181b;
+.todo-item:hover,
+.todo-item:hover > .chevron,
+.expanded,
+.expanded > .chevron {
+    background-color: var(--zinc-100);
+    color: var(--zinc-900);
 }
 
 .add-project-btn:hover,
 .add-todo-btn:hover {
-    background-color: #4338ca;
-    color: #fafafa;
+    background-color: var(--indigo-dark);
+    color: var(--zinc-50);
 }
 
 .hidden {
-    display: none;
-}
-
-.current-project,
-.current-project:hover,
-.current-project > .delete-project {
-    background-color: #6366f1;
-    color: #fafafa;
+    display: none !important;
 }
 
 .current-project:hover > .delete-project:hover {
-    background-color: #4338ca;
+    background-color: var(--indigo-dark);
 }
 
 .content {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
-    background-color: #fafafa;
 }
 
 ul {
     list-style-type: none;
+    padding: 0;
 }
 
 label {
@@ -126,33 +152,39 @@ label {
 
 li,
 button,
-input {
+.add-project-field,
+.add-todo-field {
     box-sizing: border-box;
     border: none;
     padding: 10px 20px;
     border-radius: 10px;
-    margin-top: 10px;
-    color: #52525b;
+    color: var(--zinc-800);
 }
 
-li,
-button {
-    cursor: pointer;
-}
-
-.project-item,
-.todo-item {
+.project-item {
     display: flex;
     align-content: center;
     width: 100%;
     justify-content: space-between;
 }
 
-.todo-item:hover,
-.show-add-todo-form-btn:hover,
-.todo-item:hover > .chevron {
-    background-color: #f4f4f5;
-    color: #18181b;
+.todo-item {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    grid-template-rows: 30px 1fr;
+    align-items: center;
+    box-shadow: 0 2px 2px var(--zinc-300);
+}
+
+.project-item,
+.todo-item,
+.add-project-field,
+.add-todo-field {
+    margin-bottom: 10px;
+}
+
+.expanded {
+    box-shadow: 0 2px 2px var(--zinc-300);
 }
 
 .project-item:hover > .delete-project,
@@ -164,23 +196,16 @@ button {
 .delete-project,
 .delete-todo {
     display: none;
-    background-color: #f4f4f5;
+    background-color: var(--zinc-100);
     font-size: 18px;
     border-radius: 3px;
     padding: 1px 10px;
     margin: 0;
 }
 
-.delete-todo:hover {
-    background-color: #e4e4e7;
-}
-
-.delete-project {
-    background-color: #d4d4d8;
-}
-
+.delete-todo:hover,
 .delete-project:hover {
-    background-color: #a1a1aa;
+    background-color: var(--zinc-200);
 }
 
 input[type=checkbox]:checked + label.strikethrough {
@@ -188,11 +213,40 @@ input[type=checkbox]:checked + label.strikethrough {
 }
 
 .chevron {
-    display: none;
+    background-color: var(--zinc-50);
     background-image: url('./chevron-down.svg');
     background-repeat: no-repeat;
     background-position: center;
     margin: 0;  
     height: 25px;
     align-self: center;
+    grid-template-columns: 2 / 3;
+}
+
+label,
+button,
+.checkbox-title-container,
+.project-item {
+    cursor: pointer;
+}
+
+.todo-details-container {
+    grid-template-columns: 1 / 3;
+    grid-template-rows: 2 / 3;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.todo-details-container > .checkbox {
+    margin: 0;
+}
+
+.todo-details-container > label {
+    font-size: 16px;
+}
+
+.rotate {
+    rotate: 180deg;
 }

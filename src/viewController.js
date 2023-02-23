@@ -4,11 +4,13 @@ export default function viewController(projectsArray, currentProject) {
     const projectsList = document.createElement('ul');
     const content = document.createElement('div');
     const todoList = document.createElement('ul');
+    
     const showAddProjectFormBtn = document.createElement('button');
     const addProjectField = document.createElement('input');
     const addProjectContainer = document.createElement('div');
     const addProjectBtn = document.createElement('button');
     const addProjectCancelBtn = document.createElement('button');
+
     const showAddTodoFormBtn = document.createElement('button');
     const addTodoField = document.createElement('input');
     const addTodoContainer = document.createElement('div');
@@ -116,6 +118,29 @@ export default function viewController(projectsArray, currentProject) {
         addProjectField.value = '';
     }
 
+    function toggleTodoDetails(e) {
+        if(e.target.classList.contains('checkbox-title-container') || e.target.classList.contains('strikethrough') || e.target.classList.contains('chevron')) {
+            var detailsContainer;
+            switch(e.target.nodeName) {
+                case 'DIV': 
+                    detailsContainer = e.target.parentNode.children[2];
+                    break;
+                case 'LABEL':
+                    detailsContainer = e.target.parentNode.parentNode.children[2];
+                    break;
+                case 'BUTTON':
+                    detailsContainer = e.target.parentNode.children[2];
+                    break;
+            }
+            detailsContainer.classList.toggle('hidden');
+            detailsContainer.parentNode.classList.toggle('expanded');
+            // rotate chevron
+            detailsContainer.parentNode.children[1].classList.toggle('rotate');
+            // disable checkbox
+            detailsContainer.parentNode.children[0].children[0].disabled = !detailsContainer.parentNode.children[0].children[0].disabled;
+        }
+    }
+
     function toggleAddTodoForm() {
         addTodoField.classList.toggle('hidden');
         addTodoField.focus();
@@ -145,6 +170,7 @@ export default function viewController(projectsArray, currentProject) {
             todoTitle.classList.add('strikethrough');
 
             const checkboxTitlecontainer = document.createElement('div');
+            checkboxTitlecontainer.classList.add('checkbox-title-container')
             checkboxTitlecontainer.append(checkbox, todoTitle);
 
             const deleteBtn = document.createElement('button');
@@ -154,7 +180,56 @@ export default function viewController(projectsArray, currentProject) {
             const chevron = document.createElement('button');
             chevron.classList.add('chevron');
 
-            todoListItem.append(checkboxTitlecontainer, chevron); // deleteBtn
+            // todo details/edit
+            const todoDetailsContainer = document.createElement('div');
+            todoDetailsContainer.classList.add('todo-details-container');
+            todoDetailsContainer.classList.add('hidden');
+            const todoTitleLabel = document.createElement('label');
+            todoTitleLabel.textContent = 'To-do';
+            const todoTitleInput = document.createElement('input');
+            todoTitleInput.setAttribute('type', 'text');
+            todoTitleInput.value = "test"; // test
+            const todoDescriptionLabel = document.createElement('label');
+            todoDescriptionLabel.textContent = 'Description';
+            const todoDescriptionInput = document.createElement('textarea');
+            const todoDueDateLabel = document.createElement('label');
+            todoDueDateLabel.textContent = 'Due';
+            const todoDueDateInput = document.createElement('input');
+            todoDueDateInput.setAttribute('type', 'date');
+            const todoPriorityLabel = document.createElement('label');
+            todoPriorityLabel.textContent = 'Priority';
+            const todoPriorityInput = document.createElement('select');
+            const lowPriorityOption = document.createElement('option');
+            lowPriorityOption.value = 'low';
+            lowPriorityOption.textContent = 'low';
+            const medPriorityOption = document.createElement('option');
+            medPriorityOption.selected = 'selected';
+            medPriorityOption.value = 'medium';
+            medPriorityOption.textContent = 'medium';
+            const highPriorityOption = document.createElement('option');
+            highPriorityOption.value = 'high';
+            highPriorityOption.textContent = 'high';
+            const todoNotesLabel = document.createElement('label');
+            todoNotesLabel.textContent = 'Notes';
+            const todoNotesInput = document.createElement('textarea');
+
+            todoPriorityInput.append(lowPriorityOption, medPriorityOption, highPriorityOption);
+
+            todoDetailsContainer.append(todoTitleLabel, todoTitleInput, 
+                todoDescriptionLabel, todoDescriptionInput, 
+                todoDueDateLabel, todoDueDateInput, 
+                todoPriorityLabel, todoPriorityInput,
+                todoNotesLabel, todoNotesInput
+            );
+
+            Array.from(todoDetailsContainer.children).forEach(element => {
+                if((element.nodeName === 'INPUT') || (element.nodeName === 'TEXTAREA') || (element.nodeName === 'SELECT')) {
+                    // element.readOnly = true;
+                    element.disabled = true;
+                }
+            })
+
+            todoListItem.append(checkboxTitlecontainer, chevron, todoDetailsContainer); // deleteBtn
             todoList.appendChild(todoListItem);
         });
         todoList.append(addTodoField, showAddTodoFormBtn, addTodoContainer);
@@ -169,6 +244,7 @@ export default function viewController(projectsArray, currentProject) {
         updateProjects,
         updateCurrentProject,
         toggleAddProjectForm,
+        toggleTodoDetails,
         toggleAddTodoForm,
         updateTodos,
         removeItem
