@@ -190,14 +190,16 @@ export default function viewController(projectsArray, currentProject) {
             todoTitleLabel.textContent = 'To-do';
             const todoTitleInput = document.createElement('input');
             todoTitleInput.setAttribute('type', 'text');
-            todoTitleInput.value = "test"; // test
+            todoTitleInput.value = todo.title;
             const todoDescriptionLabel = document.createElement('label');
             todoDescriptionLabel.textContent = 'Description';
             const todoDescriptionInput = document.createElement('textarea');
+            todoDescriptionInput.value = todo.description;
             const todoDueDateLabel = document.createElement('label');
             todoDueDateLabel.textContent = 'Due';
             const todoDueDateInput = document.createElement('input');
             todoDueDateInput.setAttribute('type', 'date');
+            todoDueDateInput.value = todo.dueDate;
             const todoPriorityLabel = document.createElement('label');
             todoPriorityLabel.textContent = 'Priority';
             const todoPriorityInput = document.createElement('select');
@@ -214,8 +216,10 @@ export default function viewController(projectsArray, currentProject) {
             const todoNotesLabel = document.createElement('label');
             todoNotesLabel.textContent = 'Notes';
             const todoNotesInput = document.createElement('textarea');
+            todoNotesInput.value = todo.notes;
 
             todoPriorityInput.append(lowPriorityOption, medPriorityOption, highPriorityOption);
+            todoPriorityInput.value = todo.priority;
 
             todoDetailsContainer.append(todoTitleLabel, todoTitleInput, 
                 todoDescriptionLabel, todoDescriptionInput, 
@@ -227,7 +231,7 @@ export default function viewController(projectsArray, currentProject) {
             Array.from(todoDetailsContainer.children).forEach(element => {
                 if((element.nodeName === 'INPUT') || (element.nodeName === 'TEXTAREA') || (element.nodeName === 'SELECT')) {
                     // element.readOnly = true;
-                    element.disabled = true;
+                    // element.disabled = true;
                 }
             })
 
