@@ -1,5 +1,6 @@
 export default function viewController(projectsArray, currentProject) {
     const header = document.createElement('header');
+    const title = document.createElement('p');
     const sidebar = document.createElement('div');
     const projectsList = document.createElement('ul');
     const content = document.createElement('div');
@@ -18,7 +19,8 @@ export default function viewController(projectsArray, currentProject) {
     const addTodoCancelBtn = document.createElement('button');
 
     (function init() {
-        header.textContent = 'Odin To-Do List';
+        header.appendChild(title);
+        title.textContent = 'Odin To-Do List';
 
         // init sidebar with projects
         sidebar.classList.add('sidebar');
@@ -100,7 +102,7 @@ export default function viewController(projectsArray, currentProject) {
             }
             const deleteBtn = document.createElement('button');
             deleteBtn.classList.add('delete-project');
-            deleteBtn.textContent = 'x';
+            deleteBtn.textContent = 'X';
 
             projectListItem.appendChild(deleteBtn);
 
@@ -175,7 +177,7 @@ export default function viewController(projectsArray, currentProject) {
 
             const deleteBtn = document.createElement('button');
             deleteBtn.classList.add('delete-todo');
-            deleteBtn.textContent = 'x';
+            deleteBtn.textContent = 'X';
 
             const chevron = document.createElement('button');
             chevron.classList.add('chevron');
