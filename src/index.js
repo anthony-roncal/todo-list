@@ -32,7 +32,9 @@ const view = viewController(projects, currentProject);
 addSelectProjectsEventListeners();
 addDeleteProjectEventListeners();
 addCompleteTodoEventListeners();
-addTodoDetailsEventListeners();
+addToggleDetailsEventListeners();
+addToggleTodoEditEventListeners();
+addCancelTodoEditEventListeners();
 addDeleteTodoEventListeners();
 
 const showAddProjectFormBtn = document.querySelector('.show-add-project-form-btn');
@@ -61,35 +63,43 @@ function addSelectProjectsEventListeners() {
 }
 
 function selectProject(e) {
+    console.log('selectProject');
     currentProject = Array.from(e.target.parentNode.children).indexOf(e.target);
     view.updateCurrentProject(currentProject);
     view.updateTodos(projects[currentProject]);
     addCompleteTodoEventListeners();
-    addTodoDetailsEventListeners();
+    addToggleDetailsEventListeners();
+    addToggleTodoEditEventListeners();
+    addCancelTodoEditEventListeners();
     addDeleteTodoEventListeners();
 }
 
 function addDeleteProjectEventListeners() {
-    const deleteBtns = document.querySelectorAll('.delete-project');
-    deleteBtns.forEach(btn => btn.addEventListener('click', deleteItem));
+    document.querySelectorAll('.delete-project').forEach(btn => btn.addEventListener('click', deleteItem));
 }
 
 function addCompleteTodoEventListeners() {
-    const checkboxes = document.querySelectorAll('input[type=checkbox]');
-    checkboxes.forEach(checkbox => checkbox.addEventListener('click', completeTodo));
+    document.querySelectorAll('input[type=checkbox]').forEach(checkbox => checkbox.addEventListener('click', completeTodo));
 }
 
-function addTodoDetailsEventListeners() {
-    const todoItems = document.querySelectorAll('.todo-item');
-    todoItems.forEach(todoItem => todoItem.addEventListener('click', toggleTodoDetails));
+function addToggleDetailsEventListeners() {
+    document.querySelectorAll('.todo-item').forEach(todoItem => todoItem.addEventListener('click', toggleShowTodoDetails));
+}
+
+function addToggleTodoEditEventListeners() {
+    document.querySelectorAll('.edit-details-btn').forEach(editBtn => editBtn.addEventListener('click', toggleTodoEditMode));
+}
+
+function addCancelTodoEditEventListeners() {
+    document.querySelectorAll('.cancel-details-btn').forEach(cancelBtn => cancelBtn.addEventListener('click', toggleTodoEditMode));
 }
 
 function addDeleteTodoEventListeners() {
-    const deleteBtns = document.querySelectorAll('.delete-todo');
-    deleteBtns.forEach(btn => btn.addEventListener('click', deleteItem));
+    document.querySelectorAll('.delete-todo').forEach(btn => btn.addEventListener('click', deleteItem));
 }
 
 function addProject() {
+    console.log('addProject');
     const addProjectFieldValue = document.querySelector('.add-project-field').value.toString().trim();
     if(addProjectFieldValue) {
         const newProject = Project(projects.length, addProjectFieldValue);
@@ -102,35 +112,48 @@ function addProject() {
 } 
 
 function addTodo() {
+    console.log('addTodo');
     const addTodoFieldValue = document.querySelector('.add-todo-field').value.toString().trim();
     if(addTodoFieldValue) {
         const newTodo = Todo(addTodoFieldValue);
         projects[currentProject].todos.push(newTodo);
         view.toggleAddTodoForm();
         view.updateTodos(projects[currentProject]);
-        addTodoDetailsEventListeners();
+        addToggleDetailsEventListeners();
+        addToggleTodoEditEventListeners();
+        addCancelTodoEditEventListeners();
         addDeleteTodoEventListeners();
     }
 }
 
 function toggleAddProjectForm() {
+    console.log('toggleAddProjectForm');
     view.toggleAddProjectForm();
 }
 
 function toggleAddTodoForm() {
+    console.log('toggleAddTodoForm');
     view.toggleAddTodoForm();
 }
 
 function completeTodo(e) {
+    console.log('completeTodo');
     let index = Array.from(e.target.parentNode.parentNode.parentNode.children).indexOf(e.target.parentNode.parentNode);
     projects[currentProject].todos[index].complete = !projects[currentProject].todos[index].complete;
 }
 
-function toggleTodoDetails(e) {
-    view.toggleTodoDetails(e);
+function toggleShowTodoDetails(e) {
+    console.log('toggleShowTodoDetails');
+    view.toggleShowTodoDetails(e);
+}
+
+function toggleTodoEditMode(e) {
+    console.log('toggleTodoEditMode');
+    view.toggleTodoEditMode(e);
 }
 
 function deleteItem(e) {
+    console.log('deleteItem');
     let index = Array.from(e.target.parentNode.parentNode.children).indexOf(e.target.parentNode);
     (e.target.classList[0] === "delete-project") ? projects.splice(index, 1) : projects[currentProject].removeToDo(index);
     view.removeItem(e);

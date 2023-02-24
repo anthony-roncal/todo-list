@@ -40,7 +40,12 @@ header {
 .todo-item,
 .show-add-project-form-btn,
 .add-project-cancel-btn,
-.chevron {
+.chevron,
+.expanded,
+.todo-item.expanded:hover,
+.expanded > .chevron,
+.todo-item.expanded:hover > .chevron,
+.cancel-details-btn {
     background-color: var(--zinc-50);
     color: var(--zinc-800);
 }
@@ -96,9 +101,7 @@ header {
 .project-item:hover,
 .show-add-project-form-btn:hover,
 .todo-item:hover,
-.todo-item:hover > .chevron,
-.expanded,
-.expanded > .chevron {
+.todo-item:hover > .chevron {
     background-color: var(--zinc-100);
     color: var(--zinc-900);
 }
@@ -107,15 +110,18 @@ header {
 .current-project:hover,
 .current-project > .delete-project,
 .add-project-btn,
-.add-todo-btn {
+.add-todo-btn,
+.save-details-btn,
+.edit-details-btn {
     background-color: var(--primary);
     color: var(--zinc-800);
 }
 
 .add-project-btn:hover,
-.add-todo-btn:hover {
+.add-todo-btn:hover,
+.save-details-btn:hover,
+.edit-details-btn {
     background-color: var(--primary-dark);
-    color: var(--zinc-50);
 }
 
 .hidden {
@@ -210,7 +216,11 @@ input[type=checkbox]:checked + label.strikethrough {
     grid-template-columns: 2 / 3;
 }
 
-label,
+.rotate {
+    rotate: 180deg;
+}
+
+.checkbox-title-container > label,
 button,
 .checkbox-title-container,
 .project-item {
@@ -218,26 +228,46 @@ button,
 }
 
 .todo-details-container {
-    grid-template-columns: 1 / 3;
-    grid-template-rows: 2 / 3;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 10px;
     margin-top: 10px;
     padding-left: 20px;
+    align-items: center;
 }
 
 .todo-details-container > label {
     font-size: 14px;
+    font-weight: 600;
     color: var(--zinc-600);
+    text-align: right;
+    
 }
 
 .todo-details-container > input, 
 .todo-details-container > textarea, 
 .todo-details-container > select {
-    margin-bottom: 10px;
+    grid-template-columns: 2 / 3;
     font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--zinc-800);
 }
 
-.rotate {
-    rotate: 180deg;
+.todo-details-container > textarea {
+    resize: vertical;
 }
+
+ .todo-details-container > *:disabled {
+    border: 1px solid var(--zinc-300);
+    background-color: var(--zinc-50);
+ }
+
+ .todo-details-container > *:enabled {
+    border: 1px solid var(--zinc-500);
+    background-color: var(--zinc-50);
+ }
+
+ .todo-details-container > div {
+    grid-column: 1 / 3;
+ }

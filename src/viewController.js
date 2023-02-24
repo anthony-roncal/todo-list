@@ -33,8 +33,7 @@ export default function viewController(projectsArray, currentProject) {
         showAddProjectFormBtn.classList.add('show-add-project-form-btn');
         
         addProjectField.setAttribute('type', 'text');
-        addProjectField.classList.add('add-project-field');
-        addProjectField.classList.add('hidden');
+        addProjectField.classList.add('add-project-field', 'hidden');
         
         addProjectBtn.textContent = 'Add project';
         addProjectBtn.classList.add('add-project-btn');
@@ -42,8 +41,7 @@ export default function viewController(projectsArray, currentProject) {
         addProjectCancelBtn.textContent = 'X';
         addProjectCancelBtn.classList.add('add-project-cancel-btn');
 
-        addProjectContainer.classList.add('add-project-container');
-        addProjectContainer.classList.add('hidden');
+        addProjectContainer.classList.add('add-project-container', 'hidden');
         
         addProjectContainer.append(addProjectBtn, addProjectCancelBtn);
         projectsList.append(addProjectField, showAddProjectFormBtn, addProjectContainer);
@@ -58,8 +56,7 @@ export default function viewController(projectsArray, currentProject) {
         showAddTodoFormBtn.classList.add('show-add-todo-form-btn');
 
         addTodoField.setAttribute('type', 'text');
-        addTodoField.classList.add('add-todo-field');
-        addTodoField.classList.add('hidden');
+        addTodoField.classList.add('add-todo-field', 'hidden');
 
         addTodoBtn.textContent = 'Add to-do';
         addTodoBtn.classList.add('add-todo-btn');
@@ -67,8 +64,7 @@ export default function viewController(projectsArray, currentProject) {
         addTodoCancelBtn.textContent = 'X';
         addTodoCancelBtn.classList.add('add-todo-cancel-btn');
 
-        addTodoContainer.classList.add('add-todo-container');
-        addTodoContainer.classList.add('hidden');
+        addTodoContainer.classList.add('add-todo-container', 'hidden');
 
         addTodoContainer.append(addTodoBtn, addTodoCancelBtn);
         todoList.append(addTodoField, showAddTodoFormBtn, addTodoContainer);
@@ -120,7 +116,7 @@ export default function viewController(projectsArray, currentProject) {
         addProjectField.value = '';
     }
 
-    function toggleTodoDetails(e) {
+    function toggleShowTodoDetails(e) {
         if(e.target.classList.contains('checkbox-title-container') || e.target.classList.contains('strikethrough') || e.target.classList.contains('chevron')) {
             var detailsContainer;
             switch(e.target.nodeName) {
@@ -138,8 +134,23 @@ export default function viewController(projectsArray, currentProject) {
             detailsContainer.parentNode.classList.toggle('expanded');
             // rotate chevron
             detailsContainer.parentNode.children[1].classList.toggle('rotate');
-            // disable checkbox
-            detailsContainer.parentNode.children[0].children[0].disabled = !detailsContainer.parentNode.children[0].children[0].disabled;
+            // hide checkbox and title
+            // detailsContainer.parentNode.children[0].classList.toggle('hidden');
+        }
+    }
+
+    function toggleTodoEditMode(e) {
+        const formElements = e.target.parentNode.parentNode.children;
+        Array.from(formElements).forEach(element => element.disabled = !element.disabled);
+        if(e.target.classList.contains('edit-details-btn')) {
+            e.target.classList.toggle('hidden');
+            e.target.parentNode.children[1].classList.toggle('hidden');
+            e.target.parentNode.children[2].classList.toggle('hidden');
+        }
+        if(e.target.classList.contains('cancel-details-btn')) {
+            e.target.classList.toggle('hidden');
+            e.target.parentNode.children[0].classList.toggle('hidden');
+            e.target.parentNode.children[1].classList.toggle('hidden');
         }
     }
 
@@ -183,23 +194,26 @@ export default function viewController(projectsArray, currentProject) {
             chevron.classList.add('chevron');
 
             // todo details/edit
-            const todoDetailsContainer = document.createElement('div');
-            todoDetailsContainer.classList.add('todo-details-container');
-            todoDetailsContainer.classList.add('hidden');
+            const todoDetailsContainer = document.createElement('form');
+            todoDetailsContainer.classList.add('todo-details-container', 'hidden');
+            
             const todoTitleLabel = document.createElement('label');
             todoTitleLabel.textContent = 'To-do';
             const todoTitleInput = document.createElement('input');
             todoTitleInput.setAttribute('type', 'text');
             todoTitleInput.value = todo.title;
+            
             const todoDescriptionLabel = document.createElement('label');
             todoDescriptionLabel.textContent = 'Description';
             const todoDescriptionInput = document.createElement('textarea');
             todoDescriptionInput.value = todo.description;
+            
             const todoDueDateLabel = document.createElement('label');
             todoDueDateLabel.textContent = 'Due';
             const todoDueDateInput = document.createElement('input');
             todoDueDateInput.setAttribute('type', 'date');
             todoDueDateInput.value = todo.dueDate;
+            
             const todoPriorityLabel = document.createElement('label');
             todoPriorityLabel.textContent = 'Priority';
             const todoPriorityInput = document.createElement('select');
@@ -213,25 +227,42 @@ export default function viewController(projectsArray, currentProject) {
             const highPriorityOption = document.createElement('option');
             highPriorityOption.value = 'high';
             highPriorityOption.textContent = 'high';
+            
             const todoNotesLabel = document.createElement('label');
             todoNotesLabel.textContent = 'Notes';
             const todoNotesInput = document.createElement('textarea');
             todoNotesInput.value = todo.notes;
 
+            const formButtonsContainer = document.createElement('div');
+            const editDetailsBtn = document.createElement('button');
+            editDetailsBtn.textContent = 'Edit';
+            editDetailsBtn.classList.add('edit-details-btn');
+            editDetailsBtn.setAttribute('type', 'button');
+            const saveDetailsBtn = document.createElement('button');
+            saveDetailsBtn.textContent = 'Save changes';
+            saveDetailsBtn.classList.add('save-details-btn', 'hidden');
+            saveDetailsBtn.setAttribute('type', 'button');
+            const cancelDetailsBtn = document.createElement('button');
+            cancelDetailsBtn.textContent = 'X';
+            cancelDetailsBtn.classList.add('cancel-details-btn', 'hidden');
+            cancelDetailsBtn.setAttribute('type', 'button');
+
             todoPriorityInput.append(lowPriorityOption, medPriorityOption, highPriorityOption);
             todoPriorityInput.value = todo.priority;
+
+            formButtonsContainer.append(editDetailsBtn, saveDetailsBtn, cancelDetailsBtn);
 
             todoDetailsContainer.append(todoTitleLabel, todoTitleInput, 
                 todoDescriptionLabel, todoDescriptionInput, 
                 todoDueDateLabel, todoDueDateInput, 
                 todoPriorityLabel, todoPriorityInput,
-                todoNotesLabel, todoNotesInput
+                todoNotesLabel, todoNotesInput,
+                formButtonsContainer
             );
 
             Array.from(todoDetailsContainer.children).forEach(element => {
                 if((element.nodeName === 'INPUT') || (element.nodeName === 'TEXTAREA') || (element.nodeName === 'SELECT')) {
-                    // element.readOnly = true;
-                    // element.disabled = true;
+                    element.disabled = true;
                 }
             })
 
@@ -250,7 +281,8 @@ export default function viewController(projectsArray, currentProject) {
         updateProjects,
         updateCurrentProject,
         toggleAddProjectForm,
-        toggleTodoDetails,
+        toggleShowTodoDetails,
+        toggleTodoEditMode,
         toggleAddTodoForm,
         updateTodos,
         removeItem
