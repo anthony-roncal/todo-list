@@ -3,6 +3,9 @@ export default function Project(id, title) {
 
     function addToDo(todo) {
         this.todos.push(todo);
+        this.todos.sort(function(a, b) { 
+            return new Date(a.dueDate) - new Date(b.dueDate);
+        });
     }
 
     function removeToDo(index) {

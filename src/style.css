@@ -207,7 +207,7 @@ input[type=checkbox]:checked + label.strikethrough {
 }
 
 .chevron {
-    background-image: url('./chevron-down.svg');
+background-image: url('./chevron-down.svg');
     background-repeat: no-repeat;
     background-position: center;
     margin: 0;  
@@ -227,7 +227,7 @@ button,
     cursor: pointer;
 }
 
-.todo-details-container {
+.todo-details-form {
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -237,7 +237,7 @@ button,
     align-items: center;
 }
 
-.todo-details-container > label {
+.todo-details-form > label {
     font-size: 14px;
     font-weight: 600;
     color: var(--zinc-600);
@@ -245,29 +245,29 @@ button,
     
 }
 
-.todo-details-container > input, 
-.todo-details-container > textarea, 
-.todo-details-container > select {
+.todo-details-form > input, 
+.todo-details-form > textarea, 
+.todo-details-form > select {
     grid-template-columns: 2 / 3;
     font-size: 16px;
     font-family: Arial, Helvetica, sans-serif;
     color: var(--zinc-800);
 }
 
-.todo-details-container > textarea {
+.todo-details-form > textarea {
     resize: vertical;
 }
 
- .todo-details-container > *:disabled {
+ .todo-details-form > *:disabled {
     border: 1px solid var(--zinc-300);
     background-color: var(--zinc-50);
  }
 
- .todo-details-container > *:enabled {
+ .todo-details-form > *:enabled {
     border: 1px solid var(--zinc-500);
     background-color: var(--zinc-50);
  }
 
- .todo-details-container > div {
+ .todo-details-form > div {
     grid-column: 1 / 3;
  }

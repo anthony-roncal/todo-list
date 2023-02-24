@@ -3,27 +3,21 @@ import Todo from './todo';
 import Project from './project';
 import viewController from './viewController';
 
-// init projects array and default project
-let projects = [];
-const defaultProject = Project(0, "To-Do");
-const newProject = Project(1, "My List");
-let currentProject = 0;
-projects.push(defaultProject);
-projects.push(newProject);
+// init projects and currentProject in localStorage
+if(!JSON.parse(localStorage.getItem('projects'))) {
+    localStorage.setItem('projects', JSON.stringify(''));
+}
+if(!JSON.parse(localStorage.getItem('currentProject'))) {
+    localStorage.setItem('currentProject', JSON.stringify('0'));
+}
+let projects = (Array.from(JSON.parse(localStorage.getItem('projects'))));
+let currentProject = Number.parseInt(JSON.parse(localStorage.getItem('currentProject')));
 
-// init dummy data
-const testTodo1 = Todo('Pay bills', 'Pay credit card bills', '2/28/2023', 'high', 'check for any incorrect charges');
-const testTodo2 = Todo('Grocery shopping', 'milk, eggs, cauliflower rice', '2/18/2023', 'medium', 'check if we have coupons');
-const testTodo3 = Todo('Make doctor appointment', 'Make an appointment for a checkup', '3/01/2023', 'low', '');
-const testTodo4 = Todo('Wash car', 'take car to car wash', '2/18/2023', 'low', '');
-const testTodo5 = Todo('Call mom', 'return her call, update about vacation plans', '2/19/2023', 'medium', '');
-const testTodo6 = Todo('Book flight', 'book flights for vacation', '2/24/2023', 'high', 'check hopper');
-defaultProject.addToDo(testTodo1);
-defaultProject.addToDo(testTodo2);
-defaultProject.addToDo(testTodo3);
-newProject.addToDo(testTodo4);
-newProject.addToDo(testTodo5);
-newProject.addToDo(testTodo6);
+if(projects.length === 0) {
+    const defaultProject = Project(0, "To-Do");
+    projects.push(defaultProject);
+    populateStorage();
+}
 
 // init viewController
 const view = viewController(projects, currentProject);
@@ -37,23 +31,17 @@ addToggleTodoEditEventListeners();
 addCancelTodoEditEventListeners();
 addDeleteTodoEventListeners();
 
-const showAddProjectFormBtn = document.querySelector('.show-add-project-form-btn');
-showAddProjectFormBtn.addEventListener('click', toggleAddProjectForm);
+document.querySelector('.show-add-project-form-btn').addEventListener('click', toggleAddProjectForm);
 
-const addProjectCancelBtn = document.querySelector('.add-project-cancel-btn');
-addProjectCancelBtn.addEventListener('click', toggleAddProjectForm);
+document.querySelector('.add-project-cancel-btn').addEventListener('click', toggleAddProjectForm);
 
-const addProjectBtn = document.querySelector('.add-project-btn');
-addProjectBtn.addEventListener('click', addProject);
+document.querySelector('.add-project-btn').addEventListener('click', addProject);
 
-const showAddTodoFormBtn = document.querySelector('.show-add-todo-form-btn');
-showAddTodoFormBtn.addEventListener('click', toggleAddTodoForm);
+document.querySelector('.show-add-todo-form-btn').addEventListener('click', toggleAddTodoForm);
 
-const addTodoCancelBtn = document.querySelector('.add-todo-cancel-btn');
-addTodoCancelBtn.addEventListener('click', toggleAddTodoForm);
+document.querySelector('.add-todo-cancel-btn').addEventListener('click', toggleAddTodoForm);
 
-const addTodoBtn = document.querySelector('.add-todo-btn');
-addTodoBtn.addEventListener('click', addTodo);
+document.querySelector('.add-todo-btn').addEventListener('click', addTodo);
 
 function addSelectProjectsEventListeners() {
     const projectItems = document.querySelectorAll('.project-item');
@@ -72,6 +60,7 @@ function selectProject(e) {
     addToggleTodoEditEventListeners();
     addCancelTodoEditEventListeners();
     addDeleteTodoEventListeners();
+    populateStorage();
 }
 
 function addDeleteProjectEventListeners() {
@@ -108,6 +97,7 @@ function addProject() {
         view.updateProjects(currentProject);
         addDeleteProjectEventListeners()
         addSelectProjectsEventListeners();
+        populateStorage();
     }
 } 
 
@@ -123,6 +113,7 @@ function addTodo() {
         addToggleTodoEditEventListeners();
         addCancelTodoEditEventListeners();
         addDeleteTodoEventListeners();
+        populateStorage();
     }
 }
 
@@ -140,6 +131,7 @@ function completeTodo(e) {
     console.log('completeTodo');
     let index = Array.from(e.target.parentNode.parentNode.parentNode.children).indexOf(e.target.parentNode.parentNode);
     projects[currentProject].todos[index].complete = !projects[currentProject].todos[index].complete;
+    populateStorage();
 }
 
 function toggleShowTodoDetails(e) {
@@ -157,4 +149,10 @@ function deleteItem(e) {
     let index = Array.from(e.target.parentNode.parentNode.children).indexOf(e.target.parentNode);
     (e.target.classList[0] === "delete-project") ? projects.splice(index, 1) : projects[currentProject].removeToDo(index);
     view.removeItem(e);
+    populateStorage();
+}
+
+function populateStorage() {
+    localStorage.setItem('projects', JSON.stringify(projects));
+    localStorage.setItem('currentProject', JSON.stringify(currentProject));
 }

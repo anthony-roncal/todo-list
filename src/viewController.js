@@ -49,7 +49,7 @@ export default function viewController(projectsArray, currentProject) {
         // init content with todos
         content.classList.add('content');
         todoList.classList.add('todo-ul');
-        updateTodos(projectsArray[0]);
+        updateTodos(projectsArray[currentProject]);
 
         // init hidden add todo form
         showAddTodoFormBtn.textContent = '+ Add new to-do';
@@ -169,7 +169,6 @@ export default function viewController(projectsArray, currentProject) {
         Array.from(todoList.children).forEach(todo => {
             todoList.removeChild(todo);
         });
-        // add new Todos
         project.todos.forEach(todo => {
             const todoListItem = document.createElement('li');
             todoListItem.classList.add('todo-item');
@@ -177,6 +176,7 @@ export default function viewController(projectsArray, currentProject) {
             const checkbox = document.createElement('input');
             checkbox.setAttribute('type', 'checkbox');
             (todo.complete) ? checkbox.checked = true : checkbox.checked = false;
+            checkbox.classList.add(todo.priority);
 
             const todoTitle = document.createElement('label');
             todoTitle.textContent = todo.title;
@@ -195,7 +195,7 @@ export default function viewController(projectsArray, currentProject) {
 
             // todo details/edit
             const todoDetailsContainer = document.createElement('form');
-            todoDetailsContainer.classList.add('todo-details-container', 'hidden');
+            todoDetailsContainer.classList.add('todo-details-form', 'hidden');
             
             const todoTitleLabel = document.createElement('label');
             todoTitleLabel.textContent = 'To-do';
@@ -249,6 +249,7 @@ export default function viewController(projectsArray, currentProject) {
 
             todoPriorityInput.append(lowPriorityOption, medPriorityOption, highPriorityOption);
             todoPriorityInput.value = todo.priority;
+
 
             formButtonsContainer.append(editDetailsBtn, saveDetailsBtn, cancelDetailsBtn);
 
