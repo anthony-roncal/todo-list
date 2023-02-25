@@ -206,7 +206,9 @@ export default function viewController(projectsArray, currentProject) {
             const todoDescriptionLabel = document.createElement('label');
             todoDescriptionLabel.textContent = 'Description';
             const todoDescriptionInput = document.createElement('textarea');
-            todoDescriptionInput.value = todo.description;
+            if (todo.description) {
+                todoDescriptionInput.value = todo.description;
+            }
             
             const todoDueDateLabel = document.createElement('label');
             todoDueDateLabel.textContent = 'Due';
@@ -231,7 +233,9 @@ export default function viewController(projectsArray, currentProject) {
             const todoNotesLabel = document.createElement('label');
             todoNotesLabel.textContent = 'Notes';
             const todoNotesInput = document.createElement('textarea');
-            todoNotesInput.value = todo.notes;
+            if(todo.notes) {
+                todoNotesInput.value = todo.notes;
+            }
 
             const formButtonsContainer = document.createElement('div');
             const editDetailsBtn = document.createElement('button');
