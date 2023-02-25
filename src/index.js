@@ -36,12 +36,22 @@ document.querySelector('.show-add-project-form-btn').addEventListener('click', t
 document.querySelector('.add-project-cancel-btn').addEventListener('click', toggleAddProjectForm);
 
 document.querySelector('.add-project-btn').addEventListener('click', addProject);
+document.querySelector('.add-project-field').addEventListener('keydown', e => {
+    if (e.code === 'Enter') {
+        addProject();
+    }
+});
 
 document.querySelector('.show-add-todo-form-btn').addEventListener('click', toggleAddTodoForm);
 
 document.querySelector('.add-todo-cancel-btn').addEventListener('click', toggleAddTodoForm);
 
 document.querySelector('.add-todo-btn').addEventListener('click', addTodo);
+document.querySelector('.add-todo-field').addEventListener('keydown', e => {
+    if (e.code === 'Enter') {
+        addTodo();
+    }
+});
 
 function addSelectProjectsEventListeners() {
     const projectItems = document.querySelectorAll('.project-item');
