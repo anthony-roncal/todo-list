@@ -23,16 +23,10 @@ if(projects.length === 0) {
 const view = viewController(projects, currentProject);
 
 // add event listeners
-addSelectProjectsEventListeners();
-addDeleteProjectEventListeners();
-addCompleteTodoEventListeners();
-addToggleDetailsEventListeners();
-addToggleTodoEditEventListeners();
-addCancelTodoEditEventListeners();
-addDeleteTodoEventListeners();
+addProjectEventListeners();
+addTodoEventListeners();
 
 document.querySelector('.show-add-project-form-btn').addEventListener('click', toggleAddProjectForm);
-
 document.querySelector('.add-project-cancel-btn').addEventListener('click', toggleAddProjectForm);
 
 document.querySelector('.add-project-btn').addEventListener('click', addProject);
@@ -43,7 +37,6 @@ document.querySelector('.add-project-field').addEventListener('keydown', e => {
 });
 
 document.querySelector('.show-add-todo-form-btn').addEventListener('click', toggleAddTodoForm);
-
 document.querySelector('.add-todo-cancel-btn').addEventListener('click', toggleAddTodoForm);
 
 document.querySelector('.add-todo-btn').addEventListener('click', addTodo);
@@ -53,11 +46,9 @@ document.querySelector('.add-todo-field').addEventListener('keydown', e => {
     }
 });
 
-function addSelectProjectsEventListeners() {
-    const projectItems = document.querySelectorAll('.project-item');
-    projectItems.forEach(item => {
-        item.addEventListener('click', selectProject);
-    });
+function addProjectEventListeners() {
+    document.querySelectorAll('.project-item').forEach(item => item.addEventListener('click', selectProject));
+    document.querySelectorAll('.delete-project').forEach(btn => btn.addEventListener('click', deleteItem));
 }
 
 function selectProject(e) {
@@ -65,35 +56,15 @@ function selectProject(e) {
     currentProject = Array.from(e.target.parentNode.children).indexOf(e.target);
     view.updateCurrentProject(currentProject);
     view.updateTodos(projects[currentProject]);
-    addCompleteTodoEventListeners();
-    addToggleDetailsEventListeners();
-    addToggleTodoEditEventListeners();
-    addCancelTodoEditEventListeners();
-    addDeleteTodoEventListeners();
+    addTodoEventListeners();
     populateStorage();
 }
 
-function addDeleteProjectEventListeners() {
-    document.querySelectorAll('.delete-project').forEach(btn => btn.addEventListener('click', deleteItem));
-}
-
-function addCompleteTodoEventListeners() {
+function addTodoEventListeners() {
     document.querySelectorAll('input[type=checkbox]').forEach(checkbox => checkbox.addEventListener('click', completeTodo));
-}
-
-function addToggleDetailsEventListeners() {
     document.querySelectorAll('.todo-item').forEach(todoItem => todoItem.addEventListener('click', toggleShowTodoDetails));
-}
-
-function addToggleTodoEditEventListeners() {
     document.querySelectorAll('.edit-details-btn').forEach(editBtn => editBtn.addEventListener('click', toggleTodoEditMode));
-}
-
-function addCancelTodoEditEventListeners() {
     document.querySelectorAll('.cancel-details-btn').forEach(cancelBtn => cancelBtn.addEventListener('click', toggleTodoEditMode));
-}
-
-function addDeleteTodoEventListeners() {
     document.querySelectorAll('.delete-todo').forEach(btn => btn.addEventListener('click', deleteItem));
 }
 
@@ -105,8 +76,7 @@ function addProject() {
         projects.push(newProject);
         view.toggleAddProjectForm();
         view.updateProjects(currentProject);
-        addDeleteProjectEventListeners()
-        addSelectProjectsEventListeners();
+        addProjectEventListeners();
         populateStorage();
     }
 } 
@@ -119,10 +89,7 @@ function addTodo() {
         projects[currentProject].todos.push(newTodo);
         view.toggleAddTodoForm();
         view.updateTodos(projects[currentProject]);
-        addToggleDetailsEventListeners();
-        addToggleTodoEditEventListeners();
-        addCancelTodoEditEventListeners();
-        addDeleteTodoEventListeners();
+        addTodoEventListeners();
         populateStorage();
     }
 }
