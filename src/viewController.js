@@ -193,7 +193,7 @@ export default function viewController(projectsArray, currentProject) {
             const chevron = document.createElement('button');
             chevron.classList.add('chevron');
 
-            // todo details/edit
+            // todo details/edit form
             const todoDetailsContainer = document.createElement('form');
             todoDetailsContainer.classList.add('todo-details-form', 'hidden');
             
@@ -201,24 +201,32 @@ export default function viewController(projectsArray, currentProject) {
             todoTitleLabel.textContent = 'To-do';
             const todoTitleInput = document.createElement('input');
             todoTitleInput.setAttribute('type', 'text');
+            todoTitleInput.id = 'title';
+            todoTitleInput.setAttribute('name', 'title');
             todoTitleInput.value = todo.title;
             
             const todoDescriptionLabel = document.createElement('label');
             todoDescriptionLabel.textContent = 'Description';
             const todoDescriptionInput = document.createElement('textarea');
+            todoDescriptionInput.id = 'description';
+            todoDescriptionInput.setAttribute('name', 'description');
             if (todo.description) {
                 todoDescriptionInput.value = todo.description;
             }
             
             const todoDueDateLabel = document.createElement('label');
-            todoDueDateLabel.textContent = 'Due';
+            todoDueDateLabel.textContent = 'Due date';
             const todoDueDateInput = document.createElement('input');
+            todoDueDateInput.id = 'dueDate';
             todoDueDateInput.setAttribute('type', 'date');
+            todoDueDateInput.setAttribute('name', 'dueDate');
             todoDueDateInput.value = todo.dueDate;
             
             const todoPriorityLabel = document.createElement('label');
             todoPriorityLabel.textContent = 'Priority';
             const todoPriorityInput = document.createElement('select');
+            todoPriorityInput.id = 'priority';
+            todoPriorityInput.setAttribute('name', 'priority');
             const lowPriorityOption = document.createElement('option');
             lowPriorityOption.value = 'low';
             lowPriorityOption.textContent = 'low';
@@ -233,6 +241,8 @@ export default function viewController(projectsArray, currentProject) {
             const todoNotesLabel = document.createElement('label');
             todoNotesLabel.textContent = 'Notes';
             const todoNotesInput = document.createElement('textarea');
+            todoNotesInput.id = 'notes';
+            todoNotesInput.setAttribute('name', 'notes');
             if(todo.notes) {
                 todoNotesInput.value = todo.notes;
             }
@@ -245,7 +255,7 @@ export default function viewController(projectsArray, currentProject) {
             const saveDetailsBtn = document.createElement('button');
             saveDetailsBtn.textContent = 'Save changes';
             saveDetailsBtn.classList.add('save-details-btn', 'hidden');
-            saveDetailsBtn.setAttribute('type', 'button');
+            saveDetailsBtn.setAttribute('type', 'submit');
             const cancelDetailsBtn = document.createElement('button');
             cancelDetailsBtn.textContent = 'X';
             cancelDetailsBtn.classList.add('cancel-details-btn', 'hidden');

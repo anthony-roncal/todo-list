@@ -64,6 +64,7 @@ function addTodoEventListeners() {
     document.querySelectorAll('input[type=checkbox]').forEach(checkbox => checkbox.addEventListener('click', completeTodo));
     document.querySelectorAll('.todo-item').forEach(todoItem => todoItem.addEventListener('click', toggleShowTodoDetails));
     document.querySelectorAll('.edit-details-btn').forEach(editBtn => editBtn.addEventListener('click', toggleTodoEditMode));
+    document.querySelectorAll('.save-details-btn').forEach(saveBtn => saveBtn.addEventListener('click', saveTodoEdit));
     document.querySelectorAll('.cancel-details-btn').forEach(cancelBtn => cancelBtn.addEventListener('click', toggleTodoEditMode));
     document.querySelectorAll('.delete-todo').forEach(btn => btn.addEventListener('click', deleteItem));
 }
@@ -119,6 +120,21 @@ function toggleShowTodoDetails(e) {
 function toggleTodoEditMode(e) {
     console.log('toggleTodoEditMode');
     view.toggleTodoEditMode(e);
+}
+
+function saveTodoEdit(e) {
+    e.preventDefault();
+    let index = Array.from(e.target.parentNode.parentNode.parentNode.parentNode.children).indexOf(e.target.parentNode.parentNode.parentNode);
+    // console.log(projects[currentProject].todos[index]);
+
+    var formData = new FormData(Array.from(document.querySelectorAll('.todo-ul form'))[index]);
+    for (var pair of formData.entries()) {
+        projects[currentProject].todos[index][pair[0]] = pair[1];
+    }
+    console.log(projects[currentProject].todos[index]);
+    view.updateTodos(projects[currentProject]);
+    addTodoEventListeners();
+    populateStorage();
 }
 
 function deleteItem(e) {
