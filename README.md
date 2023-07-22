@@ -1,3 +1,3 @@
-# odin-todo-list
+# todo-list
 
-This is a practice project for The Odin Project: Todo List.
+View app at: https://anthony-roncal.github.io/todo-list/
